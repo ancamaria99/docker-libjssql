@@ -1,0 +1,14 @@
+FROM centos:7
+
+RUN yum -y update &&\
+    yum -y install git &&\
+    yum -y install make &&\
+    yum -y install autoconf autoconf-archive automake libtool mysql-devel postgresql-devel mozjs17-devel libspf2-devel
+
+RUN mkdir /opt/mailfilter &&\
+    cd /opt/mailfilter &&\
+    mkdir bin include lib src
+
+RUN cd /opt/mailfilter/src &&\
+    git clone --branch mozjs "https://github.com/mindbit/libjsmisc.git" &&\
+    git clone "https://github.com/mindbit/libjssql.git"
