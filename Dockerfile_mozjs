@@ -1,8 +1,12 @@
 FROM centos:7
 
+ENV container docker
+
 RUN yum -y update &&\
     yum -y install git &&\
     yum -y install make &&\
+    yum -y install wget &&\
+    yum -y install sudo &&\
     yum -y install autoconf autoconf-archive automake libtool mysql-devel postgresql-devel mozjs17-devel libspf2-devel
 
 RUN mkdir /opt/mailfilter &&\
@@ -12,3 +16,15 @@ RUN mkdir /opt/mailfilter &&\
 RUN cd /opt/mailfilter/src &&\
     git clone --branch mozjs "https://github.com/mindbit/libjsmisc.git" &&\
     git clone "https://github.com/mindbit/libjssql.git"
+
+RUN wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm &&\
+    md5sum mysql57-community-release-el7-9.noarch.rpm &&\
+   rpm -ivh mysql57-community-release-el7-9.noarch.rpm &&\
+   yum -y install mysql-server
+
+
+
+
+
+
+
