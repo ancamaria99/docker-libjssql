@@ -2,4 +2,20 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install build-essential -y
 
-RUN apt-get install -y duktape duktape-dev libduktape205
+RUN apt-get install -y duktape duktape-dev libduktape205 &&\
+    apt-get install -y git wget sudo &&\
+    apt-get install -y autoconf autoconf-archive automake libtool libmysqlclient-dev libpq-dev libspf2-dev
+
+RUN mkdir /opt/mailfilter &&\
+    cd /opt/mailfilter &&\
+    mkdir bin include lib src
+
+RUN cd /opt/mailfilter/src &&\
+    git clone "https://github.com/mindbit/libjsmisc.git"
+#   &&\ git clone "https://github.com/mindbit/libjssql.git"
+
+WORKDIR /opt/mailfilter/src/libjssql
+
+COPY libjssql ./
+
+# TODO: Add pkg-config 
